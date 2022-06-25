@@ -47,27 +47,30 @@ class Slicer_Preferences(bpy.types.AddonPreferences):
     name="Thickness",
     description="Thickness of the cutting material (mm)",
     min=0.1,
-    soft_max=50,
-    step=0.1,
-    default=2,
+    soft_min=1,
+    soft_max=10,
+    step=0.1*100,
+    default=3,
     )
 
   material_width: bpy.props.FloatProperty(
     name="Width",
     description="Width of the cutting material (mm)",
     min=1,
-    soft_max=5000,
-    step=10,
-    default=450,
+    soft_min=10,
+    soft_max=700,
+    step=10*100,
+    default=210,
     )
 
   material_height: bpy.props.FloatProperty(
     name="Height",
     description="Height of the cutting material (mm)",
     min=1,
-    soft_max=5000,
-    step=10,
-    default=450,
+    soft_min=10,
+    soft_max=500,
+    step=10*100,
+    default=297,
     )
 
   # ------------------------------------------------------------------------
@@ -119,7 +122,7 @@ class Slicer_Preferences(bpy.types.AddonPreferences):
     description="Thickness of the laser cut (mm)",
     min=0,
     soft_max=5,
-    default=1,
+    default=0.04,
     )
 
   accuracy: bpy.props.BoolProperty(
