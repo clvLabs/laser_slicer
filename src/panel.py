@@ -73,7 +73,6 @@ class OBJECT_PT_LaserSlicer_Slice_Panel(LaserSlicer_Panel):
     layout.row().prop(prefs, "separate_files")
     if prefs.separate_files:
       layout.row().prop(prefs, "svg_position", text="Pos")
-    layout.row().prop(prefs, "preview")
 
     layout.separator()
     layout.row().operator(
@@ -81,7 +80,7 @@ class OBJECT_PT_LaserSlicer_Slice_Panel(LaserSlicer_Panel):
       text='Reset slice defaults',
       icon='LOOP_BACK').mode = "SLICE"
 
-    # --- Slice button ---
+    # --- Previes/Slice buttons ---
 
     if context.active_object \
       and context.active_object.select_get() \
@@ -93,12 +92,15 @@ class OBJECT_PT_LaserSlicer_Slice_Panel(LaserSlicer_Panel):
       row.label(text = 'No. of slices : {:.0f}'.format(slice_count))
 
       split = layout.split()
-      col = split.column()
       if not bpy.data.filepath and not prefs.ofile:
+        col = split.column()
         col.alert = True
         col.label(text="Please save file before slicing")
       else:
-        col.operator("object.laser_slicer", text="Slice the object", icon='PLAY')
+        col = split.column()
+        col.operator("object.laser_slicer_preview", text="Preview", icon='HIDE_OFF')
+        col = split.column()
+        col.operator("object.laser_slicer_slice", text="Slice", icon='PLAY')
 
     else:
       split = layout.split()

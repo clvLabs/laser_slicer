@@ -32,7 +32,6 @@ class Slicer_Preferences_Reset(bpy.types.Operator):
       prefs.property_unset('ofile')
       prefs.property_unset('separate_files')
       prefs.property_unset('svg_position')
-      prefs.property_unset('preview')
 
     return {'FINISHED'}
 
