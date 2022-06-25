@@ -3,6 +3,7 @@ import time
 from .slicer import slicer
 
 class OBJECT_OT_LaserSlicer_preview(bpy.types.Operator):
+  '''Preview result of slicing'''
   bl_label = "Laser Slicer - Preview"
   bl_idname = "object.laser_slicer_preview"
 
@@ -12,6 +13,7 @@ class OBJECT_OT_LaserSlicer_preview(bpy.types.Operator):
 
 
 class OBJECT_OT_LaserSlicer_slice(bpy.types.Operator):
+  '''Slice selected object'''
   bl_label = "Laser Slicer - Slice"
   bl_idname = "object.laser_slicer_slice"
 

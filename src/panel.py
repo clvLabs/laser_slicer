@@ -1,6 +1,7 @@
 import bpy
 
 class LaserSlicer_Panel(bpy.types.Panel):
+  '''Base class for LaserSlicer panels'''
   bl_space_type = "VIEW_3D"
   bl_region_type = "UI"
   bl_context = "objectmode"
@@ -8,6 +9,7 @@ class LaserSlicer_Panel(bpy.types.Panel):
 
 
 class OBJECT_PT_LaserSlicer_About_Panel(LaserSlicer_Panel):
+  '''About panel'''
   bl_label = "Laser Slicer"
   bl_options = {'DEFAULT_CLOSED'}
 
@@ -25,6 +27,7 @@ class OBJECT_PT_LaserSlicer_About_Panel(LaserSlicer_Panel):
 
 
 class OBJECT_PT_LaserSlicer_Material_Panel(LaserSlicer_Panel):
+  '''Material settings panel'''
   bl_label = "Material settings"
 
   def draw(self, context):
@@ -43,6 +46,7 @@ class OBJECT_PT_LaserSlicer_Material_Panel(LaserSlicer_Panel):
 
 
 class OBJECT_PT_LaserSlicer_Cut_Panel(LaserSlicer_Panel):
+  '''Cut settings panel'''
   bl_label = "Cut settings"
 
   def draw(self, context):
@@ -62,6 +66,7 @@ class OBJECT_PT_LaserSlicer_Cut_Panel(LaserSlicer_Panel):
 
 
 class OBJECT_PT_LaserSlicer_Slice_Panel(LaserSlicer_Panel):
+  '''Slice panel'''
   bl_label = "Slice"
 
   def draw(self, context):
