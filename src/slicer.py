@@ -32,26 +32,17 @@ def slicer(settings):
   lcol = settings.cut_line_color
   lthick = settings.cut_line_thickness
 
-  if not any([o.get('Slices') for o in bpy.context.scene.objects]):
-    me = bpy.data.meshes.new('Slices')
-    cob = bpy.data.objects.new('Slices', me)
-    cob['Slices'] = 1
-    cobexists = 0
-  else:
-    for o in bpy.context.scene.objects:
-      if o.get('Slices'):
-        bpy.context.view_layer.objects.active = o
+  # Delete old "Slices" object if it exists
+  for o in bpy.context.scene.objects:
+    if o.get('Slices'):
+      o.select_set(True)
+      bpy.context.view_layer.objects.active = o
+      bpy.ops.object.delete(use_global=False)
 
-        for vert in o.data.vertices:
-          vert.select = True
-
-        bpy.ops.object.mode_set(mode = 'EDIT')
-        bpy.ops.mesh.delete(type = 'VERT')
-        bpy.ops.object.mode_set(mode = 'OBJECT')
-        me = o.data
-        cob = o
-        cobexists = 1
-        break
+  # Create new "Slices" object
+  me = bpy.data.meshes.new('Slices')
+  cob = bpy.data.objects.new('Slices', me)
+  cob['Slices'] = 1
 
   vlen, elen, vlenlist, elenlist = 0, 0, [0], [0]
   vpos = numpy.empty(0)
@@ -276,9 +267,7 @@ def slicer(settings):
       svgfile.write(svgtext)
       svgfile.write("</svg>\n")
 
-  if not cobexists:
-    bpy.context.scene.collection.objects.link(cob)
-
+  bpy.context.scene.collection.objects.link(cob)
   bpy.context.view_layer.objects.active = cob
   bpy.ops.object.mode_set(mode = 'EDIT')
   bpy.ops.object.mode_set(mode = 'OBJECT')
