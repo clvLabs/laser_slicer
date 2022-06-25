@@ -88,14 +88,14 @@ class Slicer_Preferences(bpy.types.AddonPreferences):
     )
 
   cut_line_color: bpy.props.FloatVectorProperty(
-    name="Line color",
+    name="SVG line color",
     description="Color of the generated SVG line",
     subtype ='COLOR',
     default=[1.0, 0.0, 0.0],
     )
 
   cut_line_thickness: bpy.props.IntProperty(
-    name="Line thickness",
+    name="SVG line thickness",
     description="Thickness of the generated SVG line (pixels)",
     min=0,
     soft_max=5,
