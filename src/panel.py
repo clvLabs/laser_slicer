@@ -65,6 +65,27 @@ class OBJECT_PT_LaserSlicer_Cut_Panel(LaserSlicer_Panel):
       icon='LOOP_BACK').mode = "CUT"
 
 
+class OBJECT_PT_LaserSlicer_3DPreview_Panel(LaserSlicer_Panel):
+  '''3D preview settings panel'''
+  bl_label = "3D preview settings"
+
+  def draw(self, context):
+    layout = self.layout
+    prefs = bpy.context.preferences.addons[__package__.split('.')[0]].preferences
+
+    layout.row().prop(prefs, "extrude_slices")
+    layout.row().label(text="Translate preview:")
+    layout.row().prop(prefs, "preview_x_translate", text="X")
+    layout.row().prop(prefs, "preview_y_translate", text="Y")
+    layout.row().prop(prefs, "preview_z_translate", text="Z")
+
+    layout.separator()
+    layout.row().operator(
+      "object.op_laser_slicer_preferences_reset",
+      text='Reset 3D preview defaults',
+      icon='LOOP_BACK').mode = "3DPREVIEW"
+
+
 class OBJECT_PT_LaserSlicer_Slice_Panel(LaserSlicer_Panel):
   '''Slice panel'''
   bl_label = "Slice"
@@ -137,6 +158,7 @@ EXPORTED_CLASSES = (
   OBJECT_PT_LaserSlicer_About_Panel,
   OBJECT_PT_LaserSlicer_Material_Panel,
   OBJECT_PT_LaserSlicer_Cut_Panel,
+  OBJECT_PT_LaserSlicer_3DPreview_Panel,
   OBJECT_PT_LaserSlicer_Slice_Panel,
   OBJECT_PT_LaserSlicer_Reset_Panel,
 )

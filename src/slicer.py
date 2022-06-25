@@ -19,7 +19,6 @@ def slicer(settings):
   sepfile = settings.separate_files
   minz = min([v.co[2] for v in bm.verts])
   maxz = max([v.co[2] for v in bm.verts])
-  maxx = max([v.co[0] for v in bm.verts])
   lh = minz + lt * 0.5
   preview = settings.preview
   kerf = settings.laser_kerf/f_scale
@@ -274,5 +273,78 @@ def slicer(settings):
   bpy.context.view_layer.objects.active = cob
   bpy.ops.object.mode_set(mode = 'EDIT')
   bpy.ops.object.mode_set(mode = 'OBJECT')
+
+  # Select created object
+  cob.select_set(True)
+  bpy.context.view_layer.objects.active = cob
+
+  # Extrude slices if requested
+  if settings.extrude_slices:
+    # Enter edit mode
+    bpy.ops.object.editmode_toggle()
+    # Select all
+    bpy.ops.mesh.select_all(action='SELECT')
+    # Create faces
+    bpy.ops.mesh.edge_face_add()
+    # Extrude
+    bpy.ops.mesh.extrude_region_move(
+      MESH_OT_extrude_region={
+        "use_normal_flip":False,
+        "use_dissolve_ortho_edges":False,
+        "mirror":False},
+        TRANSFORM_OT_translate={
+          "value":(0, 0, lt),
+          "orient_axis_ortho":'X',
+          "orient_type":'GLOBAL',
+          "orient_matrix":((1, 0, 0), (0, 1, 0), (0, 0, 1)),
+          "orient_matrix_type":'GLOBAL',
+          "constraint_axis":(False, False, True),
+          "mirror":False,
+          "use_proportional_edit":False,
+          "proportional_edit_falloff":'SMOOTH',
+          "proportional_size":1,
+          "use_proportional_connected":False,
+          "use_proportional_projected":False,
+          "snap":False,
+          "snap_target":'CLOSEST',
+          "snap_point":(0, 0, 0),
+          "snap_align":False,
+          "snap_normal":(0, 0, 0),
+          "gpencil_strokes":False,
+          "cursor_transform":False,
+          "texture_space":False,
+          "remove_on_cancel":False,
+          "view2d_edge_pan":False,
+          "release_confirm":False,
+          "use_accurate":False,
+          "use_automerge_and_split":False
+        }
+      )
+    # Exit edit mode
+    bpy.ops.object.editmode_toggle()
+
+  # Translate new object
+  bpy.ops.transform.translate(
+    value=[
+      settings.preview_x_translate,
+      settings.preview_y_translate,
+      settings.preview_z_translate,
+    ],
+    orient_axis_ortho='X',
+    orient_type='GLOBAL',
+    orient_matrix=((1, 0, 0), (0, 1, 0), (0, 0, 1)),
+    orient_matrix_type='GLOBAL',
+    constraint_axis=(True, True, True),
+    mirror=False,
+    use_proportional_edit=False,
+    proportional_edit_falloff='SMOOTH',
+    proportional_size=1,
+    use_proportional_connected=False,
+    use_proportional_projected=False
+  )
+
+
+  # Select original object again
+  cob.select_set(False)
   aob.select_set(True)
   bpy.context.view_layer.objects.active = aob

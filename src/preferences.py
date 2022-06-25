@@ -28,6 +28,12 @@ class Slicer_Preferences_Reset(bpy.types.Operator):
       prefs.property_unset('cut_line_thickness')
       prefs.property_unset('laser_kerf')
 
+    if mode == "ALL" or mode == "3DPREVIEW":
+      prefs.property_unset('extrude_slices')
+      prefs.property_unset('preview_x_translate')
+      prefs.property_unset('preview_y_translate')
+      prefs.property_unset('preview_z_translate')
+
     if mode == "ALL" or mode == "SLICE":
       prefs.property_unset('slice_gap')
       prefs.property_unset('output_file')
@@ -108,6 +114,36 @@ class Slicer_Preferences(bpy.types.AddonPreferences):
     min=0,
     soft_max=5,
     default=0.04,
+    )
+
+  # ------------------------------------------------------------------------
+  # 3D preview settings
+
+  extrude_slices: bpy.props.BoolProperty(
+    name="Extrude slices",
+    description="Simulate resulting 3D object by extruding slices by material thickness",
+    default=True,
+    )
+
+  preview_x_translate: bpy.props.FloatProperty(
+    name="Preview X translate",
+    description="Move the resulting slices to make it easier to compare (X)",
+    subtype="DISTANCE",
+    default=0.0,
+    )
+
+  preview_y_translate: bpy.props.FloatProperty(
+    name="Preview Y translate",
+    description="Move the resulting slices to make it easier to compare (Y)",
+    subtype="DISTANCE",
+    default=0.0,
+    )
+
+  preview_z_translate: bpy.props.FloatProperty(
+    name="Preview Z translate",
+    description="Move the resulting slices to make it easier to compare (Z)",
+    subtype="DISTANCE",
+    default=0.0,
     )
 
   # ------------------------------------------------------------------------
