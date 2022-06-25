@@ -1,5 +1,7 @@
 import bpy, os, bmesh, numpy
 
+SLICES_OBJ_NAME = "LaserSlices"
+
 def slicer(settings):
   dp = bpy.context.evaluated_depsgraph_get()
   f_scale = 1000 * bpy.context.scene.unit_settings.scale_length
@@ -17,6 +19,7 @@ def slicer(settings):
   sepfile = settings.separate_files
   minz = min([v.co[2] for v in bm.verts])
   maxz = max([v.co[2] for v in bm.verts])
+  maxx = max([v.co[0] for v in bm.verts])
   lh = minz + lt * 0.5
   preview = settings.preview
   kerf = settings.laser_kerf/f_scale
@@ -32,17 +35,17 @@ def slicer(settings):
   lcol = settings.cut_line_color
   lthick = settings.cut_line_thickness
 
-  # Delete old "Slices" object if it exists
+  # Delete old SLICES_OBJ_NAME object if it exists
   for o in bpy.context.scene.objects:
-    if o.get('Slices'):
+    if o.get(SLICES_OBJ_NAME):
       o.select_set(True)
       bpy.context.view_layer.objects.active = o
       bpy.ops.object.delete(use_global=False)
 
-  # Create new "Slices" object
-  me = bpy.data.meshes.new('Slices')
-  cob = bpy.data.objects.new('Slices', me)
-  cob['Slices'] = 1
+  # Create new SLICES_OBJ_NAME object
+  me = bpy.data.meshes.new(SLICES_OBJ_NAME)
+  cob = bpy.data.objects.new(SLICES_OBJ_NAME, me)
+  cob[SLICES_OBJ_NAME] = 1
 
   vlen, elen, vlenlist, elenlist = 0, 0, [0], [0]
   vpos = numpy.empty(0)

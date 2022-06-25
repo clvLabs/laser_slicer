@@ -33,5 +33,5 @@ The intention of the fork is to:
 * Configure your material settings.
 * Configure your cut settings.
 * Click the `Preview` or `Slice` button.
-* A new `Slices` object will be created.
+* A new `LaserSlices` object will be created.
 * If you specified an output file, it will be generated.
