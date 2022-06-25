@@ -29,6 +29,7 @@ class Slicer_Preferences_Reset(bpy.types.Operator):
       prefs.property_unset('laser_kerf')
 
     if mode == "ALL" or mode == "SLICE":
+      prefs.property_unset('slice_gap')
       prefs.property_unset('output_file')
       prefs.property_unset('separate_files')
       prefs.property_unset('svg_position')
@@ -111,6 +112,15 @@ class Slicer_Preferences(bpy.types.AddonPreferences):
 
   # ------------------------------------------------------------------------
   # Slice settings
+
+  slice_gap: bpy.props.FloatProperty(
+    name="Slice gap",
+    description="Extra gap between slices (mm)",
+    min=0,
+    soft_max=10,
+    step=0.1*100,
+    default=0,
+    )
 
   output_file: bpy.props.StringProperty(
     name="Output file",

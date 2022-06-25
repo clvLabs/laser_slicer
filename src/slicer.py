@@ -25,6 +25,7 @@ def slicer(settings):
   yrowpos = 0
   xmaxlast = 0
   ofile = settings.output_file
+  gap = settings.slice_gap
   mm2pi = dpi/25.4
   scale = f_scale*mm2pi
   ydiff, rysize  = 0, 0
@@ -76,7 +77,7 @@ def slicer(settings):
     elen += len(newedges)
     vlenlist.append(len(newverts) + vlenlist[-1])
     elenlist.append(len(newedges) + elenlist[-1])
-    lh += lt
+    lh += lt + (gap/f_scale)
     cbm.free()
 
   bm.free()

@@ -74,6 +74,7 @@ class OBJECT_PT_LaserSlicer_Slice_Panel(LaserSlicer_Panel):
     layout = self.layout
     prefs = bpy.context.preferences.addons[__package__.split('.')[0]].preferences
 
+    layout.row().prop(prefs, "slice_gap")
     layout.row().prop(prefs, "output_file")
     layout.row().prop(prefs, "separate_files")
     if prefs.separate_files:
@@ -93,7 +94,8 @@ class OBJECT_PT_LaserSlicer_Slice_Panel(LaserSlicer_Panel):
       and context.active_object.data.polygons:
 
       row = layout.row()
-      slice_count = context.active_object.dimensions[2] * 1000 * context.scene.unit_settings.scale_length / prefs.material_thickness
+      _factor = 1000 * context.scene.unit_settings.scale_length / (prefs.material_thickness + prefs.slice_gap)
+      slice_count = context.active_object.dimensions[2] * _factor
       row.label(text = 'No. of slices : {:.0f}'.format(slice_count))
 
       split = layout.split()
