@@ -272,5 +272,5 @@ def slicer(settings):
   bpy.context.view_layer.objects.active = cob
   bpy.ops.object.mode_set(mode = 'EDIT')
   bpy.ops.object.mode_set(mode = 'OBJECT')
-  aob.select_set(True)
-  bpy.context.view_layer.objects.active = aob
+  # aob.select_set(True)
+  # bpy.context.view_layer.objects.active = aob
