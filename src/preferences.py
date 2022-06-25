@@ -89,7 +89,7 @@ class Slicer_Preferences(bpy.types.AddonPreferences):
     default=[1.0, 0.0, 0.0],
     )
 
-  cut_line_thickness: bpy.props.FloatProperty(
+  cut_line_thickness: bpy.props.IntProperty(
     name="Line thickness",
     description="Thickness of the generated SVG line (pixels)",
     min=0,
