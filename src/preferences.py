@@ -100,23 +100,6 @@ class Slicer_Preferences(bpy.types.AddonPreferences):
     default=1,
     )
 
-  separate_files: bpy.props.BoolProperty(
-    name="Separate SVG",
-    description="Write out separate SVG files",
-    default=False,
-    )
-
-  svg_position: bpy.props.EnumProperty(
-    name="SVG Position",
-    description="Control the position of the SVG slice",
-    items=[
-      ('TL', 'Top left',  'Top left'),
-      ('ST', 'Staggered', 'Staggered'),
-      ('CT', 'Center',    'Center')
-      ],
-    default='TL',
-    )
-
   cut_thickness: bpy.props.FloatProperty(
     name="Cut thickness",
     description="Thickness of the laser cut (mm)",
@@ -139,6 +122,23 @@ class Slicer_Preferences(bpy.types.AddonPreferences):
     description="Location of the exported file",
     subtype="FILE_PATH",
     default="",
+    )
+
+  separate_files: bpy.props.BoolProperty(
+    name="Separate SVG",
+    description="Write out separate SVG files",
+    default=False,
+    )
+
+  svg_position: bpy.props.EnumProperty(
+    name="SVG Position",
+    description="Control the position of the SVG slice",
+    items=[
+      ('TL', 'Top left',  'Top left'),
+      ('ST', 'Staggered', 'Staggered'),
+      ('CT', 'Center',    'Center')
+      ],
+    default='TL',
     )
 
 
