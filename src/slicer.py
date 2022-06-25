@@ -19,7 +19,7 @@ def slicer(settings):
   maxz = max([v.co[2] for v in bm.verts])
   lh = minz + lt * 0.5
   preview = settings.preview
-  ct = settings.cut_thickness/f_scale
+  kerf = settings.laser_kerf/f_scale
   svgpos = settings.svg_position
   dpi = settings.dpi
   yrowpos = 0
@@ -187,17 +187,17 @@ def slicer(settings):
     xmin = min([vc[0] for vc in vclist if vc not in (-1, -2)])
     ymax = max([vc[1] for vc in vclist if vc not in (-1, -2)])
     ymin = min([vc[1] for vc in vclist if vc not in (-1, -2)])
-    cysize = ymax - ymin + ct
-    cxsize = xmax - xmin + ct
+    cysize = ymax - ymin + kerf
+    cxsize = xmax - xmin + kerf
 
     if (sepfile and svgpos == 'TL') or (sepfile and vci == 0 and svgpos == 'ST'):
-      xdiff = -xmin + ct
-      ydiff = -ymin + ct
+      xdiff = -xmin + kerf
+      ydiff = -ymin + kerf
 
     elif (sepfile and svgpos == 'ST') or not sepfile:
       if f_scale * (xmaxlast + cxsize) <= mwidth:
-        xdiff = xmaxlast - xmin + ct
-        ydiff = yrowpos - ymin + ct
+        xdiff = xmaxlast - xmin + kerf
+        ydiff = yrowpos - ymin + kerf
 
         if rysize < cysize:
           rysize = cysize
@@ -205,8 +205,8 @@ def slicer(settings):
         xmaxlast += cxsize
 
       elif f_scale * cxsize > mwidth:
-        xdiff = -xmin + ct
-        ydiff = yrowpos - ymin + ct
+        xdiff = -xmin + kerf
+        ydiff = yrowpos - ymin + kerf
         yrowpos += cysize
         if rysize < cysize:
           rysize = cysize
@@ -216,8 +216,8 @@ def slicer(settings):
 
       else:
         yrowpos += rysize
-        xdiff = -xmin + ct
-        ydiff = yrowpos - ymin + ct
+        xdiff = -xmin + kerf
+        ydiff = yrowpos - ymin + kerf
         xmaxlast = cxsize
         rysize = cysize
 

@@ -26,7 +26,7 @@ class Slicer_Preferences_Reset(bpy.types.Operator):
       prefs.property_unset('dpi')
       prefs.property_unset('cut_line_color')
       prefs.property_unset('cut_line_thickness')
-      prefs.property_unset('cut_thickness')
+      prefs.property_unset('laser_kerf')
 
     if mode == "ALL" or mode == "SLICE":
       prefs.property_unset('ofile')
@@ -102,8 +102,8 @@ class Slicer_Preferences(bpy.types.AddonPreferences):
     default=1,
     )
 
-  cut_thickness: bpy.props.FloatProperty(
-    name="Cut thickness",
+  laser_kerf: bpy.props.FloatProperty(
+    name="Laser kerf",
     description="Thickness of the laser cut (mm)",
     min=0,
     soft_max=5,

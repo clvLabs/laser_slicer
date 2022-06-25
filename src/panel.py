@@ -52,7 +52,7 @@ class OBJECT_PT_LaserSlicer_Cut_Panel(LaserSlicer_Panel):
     layout.row().prop(prefs, "dpi")
     layout.row().prop(prefs, "cut_line_color")
     layout.row().prop(prefs, "cut_line_thickness")
-    layout.row().prop(prefs, "cut_thickness")
+    layout.row().prop(prefs, "laser_kerf")
 
     layout.separator()
     layout.row().operator(
