@@ -31,7 +31,7 @@ def run_slicer(operator, preview):
   slicer(prefs)
 
   elapsed = time.time() - start_time
-  msg = f"[laser-slicer] FINISHED in {elapsed:3.1f}s"
+  msg = f"[laser-slicer] FINISHED in {elapsed:5.2f}s"
   operator.report({'INFO'}, msg)
 
 # --------------------------------------------------------------------------------
