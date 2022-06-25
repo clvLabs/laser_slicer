@@ -29,7 +29,7 @@ class Slicer_Preferences_Reset(bpy.types.Operator):
       prefs.property_unset('laser_kerf')
 
     if mode == "ALL" or mode == "SLICE":
-      prefs.property_unset('ofile')
+      prefs.property_unset('output_file')
       prefs.property_unset('separate_files')
       prefs.property_unset('svg_position')
 
@@ -112,7 +112,7 @@ class Slicer_Preferences(bpy.types.AddonPreferences):
   # ------------------------------------------------------------------------
   # Slice settings
 
-  ofile: bpy.props.StringProperty(
+  output_file: bpy.props.StringProperty(
     name="Output file",
     description="Location of the exported file",
     subtype="FILE_PATH",

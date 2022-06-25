@@ -74,7 +74,7 @@ class OBJECT_PT_LaserSlicer_Slice_Panel(LaserSlicer_Panel):
     layout = self.layout
     prefs = bpy.context.preferences.addons[__package__.split('.')[0]].preferences
 
-    layout.row().prop(prefs, "ofile")
+    layout.row().prop(prefs, "output_file")
     layout.row().prop(prefs, "separate_files")
     if prefs.separate_files:
       layout.row().prop(prefs, "svg_position", text="Pos")
@@ -97,7 +97,7 @@ class OBJECT_PT_LaserSlicer_Slice_Panel(LaserSlicer_Panel):
       row.label(text = 'No. of slices : {:.0f}'.format(slice_count))
 
       split = layout.split()
-      if not bpy.data.filepath and not prefs.ofile:
+      if not bpy.data.filepath and not prefs.output_file:
         col = split.column()
         col.alert = True
         col.label(text="Please save file before slicing")

@@ -24,7 +24,7 @@ def slicer(settings):
   dpi = settings.dpi
   yrowpos = 0
   xmaxlast = 0
-  ofile = settings.ofile
+  ofile = settings.output_file
   mm2pi = dpi/25.4
   scale = f_scale*mm2pi
   ydiff, rysize  = 0, 0
