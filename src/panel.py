@@ -53,7 +53,6 @@ class OBJECT_PT_LaserSlicer_Cut_Panel(LaserSlicer_Panel):
     layout.row().prop(prefs, "cut_line_color")
     layout.row().prop(prefs, "cut_line_thickness")
     layout.row().prop(prefs, "cut_thickness")
-    layout.row().prop(prefs, "accuracy")
 
     layout.separator()
     layout.row().operator(
@@ -72,9 +71,9 @@ class OBJECT_PT_LaserSlicer_Slice_Panel(LaserSlicer_Panel):
 
     layout.row().prop(prefs, "ofile")
     layout.row().prop(prefs, "separate_files")
-
     if prefs.separate_files:
       layout.row().prop(prefs, "svg_position", text="Pos")
+    layout.row().prop(prefs, "preview")
 
     layout.separator()
     layout.row().operator(

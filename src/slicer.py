@@ -18,7 +18,7 @@ def slicer(settings):
   minz = min([v.co[2] for v in bm.verts])
   maxz = max([v.co[2] for v in bm.verts])
   lh = minz + lt * 0.5
-  accuracy = settings.accuracy
+  preview = settings.preview
   ct = settings.cut_thickness/f_scale
   svgpos = settings.svg_position
   dpi = settings.dpi
@@ -87,7 +87,7 @@ def slicer(settings):
   me.edges.foreach_get('verts', vs)
   me.edges.foreach_set('vertices', vindex)
 
-  if accuracy:
+  if not preview:
     vranges = [(vlenlist[i], vlenlist[i+1], elenlist[i], elenlist[i+1]) for i in range(len(vlenlist) - 1)]
     vtlist = []
     etlist = []
@@ -225,7 +225,7 @@ def slicer(settings):
       xdiff = mwidth/(2 * f_scale) - (0.5 * cxsize) - xmin
       ydiff = mheight/(2 * f_scale) - (0.5 * cysize) - ymin
 
-    if not accuracy:
+    if preview:
       svgtext += '<g>\n'
       svgtext += "".join(['<line x1="{0[0][0]}" y1="{0[0][1]}" x2="{0[1][0]}" y2="{0[1][1]}" style="stroke:rgb({1[0]},{1[1]},{1[2]});stroke-width:{2}" />\n'.format([(scale * (xdiff + v[0]), scale * (ydiff + v[1])) for v in e], [int(255 * lc) for lc in lcol], lthick) for e in etlist[vci]])
       svgtext += '</g>\n'

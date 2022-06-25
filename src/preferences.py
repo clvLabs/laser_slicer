@@ -27,12 +27,12 @@ class Slicer_Preferences_Reset(bpy.types.Operator):
       prefs.property_unset('cut_line_color')
       prefs.property_unset('cut_line_thickness')
       prefs.property_unset('cut_thickness')
-      prefs.property_unset('accuracy')
 
     if mode == "ALL" or mode == "SLICE":
       prefs.property_unset('ofile')
       prefs.property_unset('separate_files')
       prefs.property_unset('svg_position')
+      prefs.property_unset('preview')
 
     return {'FINISHED'}
 
@@ -110,12 +110,6 @@ class Slicer_Preferences(bpy.types.AddonPreferences):
     default=0.04,
     )
 
-  accuracy: bpy.props.BoolProperty(
-    name="Generate SVG polygons",
-    description="Control the speed and accuracy of the slicing",
-    default=False,
-    )
-
   # ------------------------------------------------------------------------
   # Slice settings
 
@@ -141,6 +135,12 @@ class Slicer_Preferences(bpy.types.AddonPreferences):
       ('CT', 'Center',    'Center')
       ],
     default='TL',
+    )
+
+  preview: bpy.props.BoolProperty(
+    name="Preview mode",
+    description="Generates SVG segments instead of polygons, faster but not recommended for laser cut",
+    default=True,
     )
 
 
