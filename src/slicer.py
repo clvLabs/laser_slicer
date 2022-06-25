@@ -64,7 +64,16 @@ def slicer(settings):
 
   while lh < maxz:
     cbm = bm.copy()
-    newgeo = bmesh.ops.bisect_plane(cbm, geom = cbm.edges[:] + cbm.faces[:], dist = 0, plane_co = (0.0, 0.0, lh), plane_no = (0.0, 0.0, 1), clear_outer = False, clear_inner = False)['geom_cut']
+    newgeo = bmesh.ops.bisect_plane(
+      cbm,
+      geom = cbm.edges[:] + cbm.faces[:],
+      dist = 0,
+      plane_co = (0.0, 0.0, lh),
+      plane_no = (0.0, 0.0, 1),
+      clear_outer = False,
+      clear_inner = False
+    )['geom_cut']
+
     newverts = [v for v in newgeo if isinstance(v, bmesh.types.BMVert)]
     newedges = [e for e in newgeo if isinstance(e, bmesh.types.BMEdge)]
     voffset = min([v.index for v in newverts])
