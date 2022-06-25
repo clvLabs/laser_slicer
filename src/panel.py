@@ -38,7 +38,7 @@ class OBJECT_PT_LaserSlicer_Material_Panel(LaserSlicer_Panel):
     layout.separator()
     layout.row().operator(
       "object.op_laser_slicer_preferences_reset",
-      text='Reset section defaults',
+      text='Reset material defaults',
       icon='LOOP_BACK').mode = "MATERIAL"
 
 
@@ -58,7 +58,7 @@ class OBJECT_PT_LaserSlicer_Cut_Panel(LaserSlicer_Panel):
     layout.separator()
     layout.row().operator(
       "object.op_laser_slicer_preferences_reset",
-      text='Reset section defaults',
+      text='Reset cut defaults',
       icon='LOOP_BACK').mode = "CUT"
 
 
@@ -76,6 +76,13 @@ class OBJECT_PT_LaserSlicer_Slice_Panel(LaserSlicer_Panel):
     if prefs.separate_files:
       layout.row().prop(prefs, "svg_position", text="Pos")
 
+    layout.separator()
+    layout.row().operator(
+      "object.op_laser_slicer_preferences_reset",
+      text='Reset slice defaults',
+      icon='LOOP_BACK').mode = "SLICE"
+
+    # --- Slice button ---
 
     if context.active_object \
       and context.active_object.select_get() \

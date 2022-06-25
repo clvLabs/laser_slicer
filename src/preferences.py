@@ -26,11 +26,13 @@ class Slicer_Preferences_Reset(bpy.types.Operator):
       prefs.property_unset('dpi')
       prefs.property_unset('cut_line_color')
       prefs.property_unset('cut_line_thickness')
-      prefs.property_unset('separate_files')
-      prefs.property_unset('svg_position')
       prefs.property_unset('cut_thickness')
       prefs.property_unset('accuracy')
+
+    if mode == "ALL" or mode == "SLICE":
       prefs.property_unset('ofile')
+      prefs.property_unset('separate_files')
+      prefs.property_unset('svg_position')
 
     return {'FINISHED'}
 
