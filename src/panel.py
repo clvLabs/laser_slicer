@@ -38,7 +38,7 @@ class OBJECT_PT_LaserSlicer_Material_Panel(LaserSlicer_Panel):
     layout.separator()
     layout.row().operator(
       "object.op_laser_slicer_preferences_reset",
-      text='Reset defaults',
+      text='Reset section defaults',
       icon='LOOP_BACK').mode = "MATERIAL"
 
 
@@ -63,7 +63,7 @@ class OBJECT_PT_LaserSlicer_Cut_Panel(LaserSlicer_Panel):
     layout.separator()
     layout.row().operator(
       "object.op_laser_slicer_preferences_reset",
-      text='Reset defaults',
+      text='Reset section defaults',
       icon='LOOP_BACK').mode = "CUT"
 
 
