@@ -39,9 +39,9 @@ bl_info = {
 import bpy
 import importlib
 
-from .src import preferences
-from .src import panel
-from .src import operator
+from .src.blender import preferences
+from .src.blender import panel
+from .src.blender import operator
 from .src import slicer
 
 ALL_MODULES = [preferences, panel, operator, slicer]

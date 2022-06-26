@@ -1,6 +1,6 @@
 import bpy
 import time
-from .slicer import slicer
+from ..slicer import slicer
 
 class OBJECT_OT_LaserSlicer_preview(bpy.types.Operator):
   '''Preview result of slicing'''
