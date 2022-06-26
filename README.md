@@ -36,9 +36,13 @@ The intention of the fork is to:
 * Select the `Laser` tab.
 * Configure your material settings.
 * Configure your cut settings.
-* Click the `Preview` or `Slice` button.
+* Click the `Preview` button.
 * A new `LaserSlices` object will be created.
-* If you specified an output file, it will be generated.
+* Tweak the settings until you like what you see.
+* Every time you click on `Preview` the `LaserSlices` object will be regenerated.
+* Click the `Slice` button. This time it will taka a little longer.
+* The `LaserSlices` object will be regenerated.
+* The `SVG` file(s) will be saved.
 
 ## Configuration
 
