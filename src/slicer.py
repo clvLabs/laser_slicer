@@ -87,7 +87,7 @@ def slicer(operator, settings):
   elist = []
   erem = []
 
-  while lh < maxz:
+  while lh <= maxz:
     cbm = bm.copy()
     newgeo = bmesh.ops.bisect_plane(
       cbm,
@@ -98,6 +98,11 @@ def slicer(operator, settings):
       clear_outer = False,
       clear_inner = False
     )['geom_cut']
+
+    if not newgeo:
+      lh += lt + (gap/f_scale)
+      cbm.free()
+      continue
 
     newverts = [v for v in newgeo if isinstance(v, bmesh.types.BMVert)]
     newedges = [e for e in newgeo if isinstance(e, bmesh.types.BMEdge)]
@@ -111,6 +116,7 @@ def slicer(operator, settings):
     elen += len(newedges)
     vlenlist.append(len(newverts) + vlenlist[-1])
     elenlist.append(len(newedges) + elenlist[-1])
+
     lh += lt + (gap/f_scale)
     cbm.free()
 
@@ -213,6 +219,11 @@ def slicer(operator, settings):
         filenames = [os.path.join(os.path.dirname(bpy.path.abspath(bpy.data.filepath)), aob.name+'{}.svg'.format(i)) for i in range(len(vlenlist))]
       else:
         filenames = [os.path.join(os.path.dirname(bpy.path.abspath(ofile)), bpy.path.display_name_from_filepath(ofile) + '{}.svg'.format(i)) for i in range(len(vlenlist))]
+
+  if not vtlist:
+    msg = f"[laser-slicer] Error: no geometry found to slice"
+    operator.report({'ERROR'}, msg)
+    return
 
   for vci, vclist in enumerate(vtlist):
     if sepfile or vci == 0:
