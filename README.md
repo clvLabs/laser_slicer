@@ -74,6 +74,14 @@ Settings sections can be collapsed so only the settings you often change are vis
 ### 3D preview settings
 
 * `Extrude slices`: If active, generated slices will be extruded for previewing purposes.
+* `Translate mode`: How to move the resulting preview 3D slices to compare with original.
+  * `None`: Generated object stays at the same position as source object.
+  * `Distance`: Specify X/Y/Z distance from source in scene units.
+    * `X/Y/Z`: Distance (in scene units) from original object.
+  * `Size`: Specify X/Y/Z distance from source in object size units.
+    * `X/Y/Z`: Distance (in object size units) from original object.
+
+
 * `Translate preview`: Move the resulting preview 3D slices to compare with original.
 
 ### Slice settings

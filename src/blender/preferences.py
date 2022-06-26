@@ -30,9 +30,13 @@ class Slicer_Preferences_Reset(bpy.types.Operator):
 
     if mode == "ALL" or mode == "3DPREVIEW":
       prefs.property_unset('extrude_slices')
-      prefs.property_unset('preview_x_translate')
-      prefs.property_unset('preview_y_translate')
-      prefs.property_unset('preview_z_translate')
+      prefs.property_unset('preview_translate_mode')
+      prefs.property_unset('preview_x_translate_distance')
+      prefs.property_unset('preview_y_translate_distance')
+      prefs.property_unset('preview_z_translate_distance')
+      prefs.property_unset('preview_x_translate_size')
+      prefs.property_unset('preview_y_translate_size')
+      prefs.property_unset('preview_z_translate_size')
 
     if mode == "ALL" or mode == "SLICE":
       prefs.property_unset('slice_gap')
@@ -129,25 +133,57 @@ class Slicer_Preferences(bpy.types.AddonPreferences):
     default=True,
     )
 
-  preview_x_translate: bpy.props.FloatProperty(
-    name="Preview X translate",
-    description="Move the resulting slices to make it easier to compare (X)",
+  preview_translate_mode: bpy.props.EnumProperty(
+    name="Translate mode",
+    description="Select how preview object will be translated (displaced)",
+    items=[
+      ('N', 'None',      'Generated object stays at the same position as source object.'),
+      ('D', 'Distance',  'Specify X/Y/Z distance from source in scene units.'),
+      ('S', 'Size',      'Specify X/Y/Z distance from source in object size units.')
+      ],
+    default='S',
+    )
+
+  preview_x_translate_distance: bpy.props.FloatProperty(
+    name="Translate X",
+    description="Move the resulting slices to make it easier to compare (X - by distance)",
     subtype="DISTANCE",
     default=0.0,
     )
 
-  preview_y_translate: bpy.props.FloatProperty(
-    name="Preview Y translate",
-    description="Move the resulting slices to make it easier to compare (Y)",
+  preview_y_translate_distance: bpy.props.FloatProperty(
+    name="Translate Y",
+    description="Move the resulting slices to make it easier to compare (Y - by distance)",
     subtype="DISTANCE",
     default=0.0,
     )
 
-  preview_z_translate: bpy.props.FloatProperty(
-    name="Preview Z translate",
-    description="Move the resulting slices to make it easier to compare (Z)",
+  preview_z_translate_distance: bpy.props.FloatProperty(
+    name="Translate Z",
+    description="Move the resulting slices to make it easier to compare (Z - by distance)",
     subtype="DISTANCE",
     default=0.0,
+    )
+
+  preview_x_translate_size: bpy.props.FloatProperty(
+    name="Preview Translate X",
+    description="Move the resulting slices to make it easier to compare (X - by obj size)",
+    step = 0.1*100,
+    default=1.1,
+    )
+
+  preview_y_translate_size: bpy.props.FloatProperty(
+    name="Preview Translate Y",
+    description="Move the resulting slices to make it easier to compare (Y - by obj size)",
+    step = 0.1*100,
+    default=0,
+    )
+
+  preview_z_translate_size: bpy.props.FloatProperty(
+    name="Preview Translate Z",
+    description="Move the resulting slices to make it easier to compare (Z - by obj size)",
+    step = 0.1*100,
+    default=0,
     )
 
   # ------------------------------------------------------------------------

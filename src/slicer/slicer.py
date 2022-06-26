@@ -370,24 +370,34 @@ def slicer(operator, settings):
     bpy.ops.object.editmode_toggle()
 
   # Translate new object
-  bpy.ops.transform.translate(
-    value=[
-      settings.preview_x_translate,
-      settings.preview_y_translate,
-      settings.preview_z_translate,
-    ],
-    orient_axis_ortho='X',
-    orient_type='GLOBAL',
-    orient_matrix=((1, 0, 0), (0, 1, 0), (0, 0, 1)),
-    orient_matrix_type='GLOBAL',
-    constraint_axis=(True, True, True),
-    mirror=False,
-    use_proportional_edit=False,
-    proportional_edit_falloff='SMOOTH',
-    proportional_size=1,
-    use_proportional_connected=False,
-    use_proportional_projected=False
-  )
+  if settings.preview_translate_mode != "N":
+    if settings.preview_translate_mode == "D":
+      translate_value = [
+        settings.preview_x_translate_distance,
+        settings.preview_y_translate_distance,
+        settings.preview_z_translate_distance,
+      ]
+    elif settings.preview_translate_mode == "S":
+      translate_value = [
+        settings.preview_x_translate_size * aob.dimensions[0],
+        settings.preview_y_translate_size * aob.dimensions[1],
+        settings.preview_z_translate_size * aob.dimensions[2],
+      ]
+
+    bpy.ops.transform.translate(
+      value=translate_value,
+      orient_axis_ortho='X',
+      orient_type='GLOBAL',
+      orient_matrix=((1, 0, 0), (0, 1, 0), (0, 0, 1)),
+      orient_matrix_type='GLOBAL',
+      constraint_axis=(True, True, True),
+      mirror=False,
+      use_proportional_edit=False,
+      proportional_edit_falloff='SMOOTH',
+      proportional_size=1,
+      use_proportional_connected=False,
+      use_proportional_projected=False
+    )
 
 
   # Select original object again

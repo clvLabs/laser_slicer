@@ -84,10 +84,15 @@ class OBJECT_PT_LaserSlicer_3DPreviewSettings_Panel(LaserSlicer_Panel):
     prefs = bpy.context.preferences.addons[__package__.split('.')[0]].preferences
 
     layout.row().prop(prefs, "extrude_slices")
-    layout.row().label(text="Translate preview:")
-    layout.row().prop(prefs, "preview_x_translate", text="X")
-    layout.row().prop(prefs, "preview_y_translate", text="Y")
-    layout.row().prop(prefs, "preview_z_translate", text="Z")
+    layout.row().prop(prefs, "preview_translate_mode")
+    if prefs.preview_translate_mode == "D":
+      layout.row().prop(prefs, "preview_x_translate_distance", text="X")
+      layout.row().prop(prefs, "preview_y_translate_distance", text="Y")
+      layout.row().prop(prefs, "preview_z_translate_distance", text="Z")
+    elif prefs.preview_translate_mode == "S":
+      layout.row().prop(prefs, "preview_x_translate_size", text="X")
+      layout.row().prop(prefs, "preview_y_translate_size", text="Y")
+      layout.row().prop(prefs, "preview_z_translate_size", text="Z")
 
     layout.separator()
     layout.row().operator(
