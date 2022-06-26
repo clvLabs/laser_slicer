@@ -122,11 +122,14 @@ class OBJECT_PT_LaserSlicer_Slice_Panel(LaserSlicer_Panel):
 
     # --- Previes/Slice buttons ---
 
-    if context.active_object \
+    valid_object_selected = context.active_object \
       and context.active_object.select_get() \
       and context.active_object.type == 'MESH' \
-      and context.active_object.data.polygons:
+      and context.active_object.data.polygons
 
+    slicing_allowed = True
+
+    if valid_object_selected:
       row = layout.row()
       _factor = 1000 * context.scene.unit_settings.scale_length / (prefs.material_thickness + prefs.slice_gap)
       slice_count = context.active_object.dimensions[2] * _factor
@@ -137,18 +140,21 @@ class OBJECT_PT_LaserSlicer_Slice_Panel(LaserSlicer_Panel):
         col = split.column()
         col.alert = True
         col.label(text="Please save file before slicing")
-      else:
-        col = split.column()
-        col.operator("object.laser_slicer_preview", text="Preview", icon='HIDE_OFF')
-        col = split.column()
-        col.operator("object.laser_slicer_slice", text="Slice", icon='PLAY')
-
+        slicing_allowed = False
     else:
       split = layout.split()
       col = split.column()
       col.alert = True
       col.label(text="Please select an object to slice")
+      slicing_allowed = False
 
+    split = layout.split()
+    if not slicing_allowed:
+      split.enabled = False
+    col = split.column()
+    col.operator("object.laser_slicer_preview", text="Preview", icon='HIDE_OFF')
+    col = split.column()
+    col.operator("object.laser_slicer_slice", text="Slice", icon='PLAY')
 
 # --------------------------------------------------------------------------------
 
