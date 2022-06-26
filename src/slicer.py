@@ -225,92 +225,95 @@ def slicer(operator, settings):
     operator.report({'ERROR'}, msg)
     return
 
-  for vci, vclist in enumerate(vtlist):
-    if sepfile or vci == 0:
-      svgtext = ''
+  # Save SVG only if we're NOT in preview mode
+  if not preview:
 
-    xmax = max([vc[0] for vc in vclist if vc not in (-1, -2)])
-    xmin = min([vc[0] for vc in vclist if vc not in (-1, -2)])
-    ymax = max([vc[1] for vc in vclist if vc not in (-1, -2)])
-    ymin = min([vc[1] for vc in vclist if vc not in (-1, -2)])
-    cysize = ymax - ymin + kerf
-    cxsize = xmax - xmin + kerf
+    for vci, vclist in enumerate(vtlist):
+      if sepfile or vci == 0:
+        svgtext = ''
 
-    if (sepfile and svgpos == 'TL') or (sepfile and vci == 0 and svgpos == 'ST'):
-      xdiff = -xmin + kerf
-      ydiff = -ymin + kerf
+      xmax = max([vc[0] for vc in vclist if vc not in (-1, -2)])
+      xmin = min([vc[0] for vc in vclist if vc not in (-1, -2)])
+      ymax = max([vc[1] for vc in vclist if vc not in (-1, -2)])
+      ymin = min([vc[1] for vc in vclist if vc not in (-1, -2)])
+      cysize = ymax - ymin + kerf
+      cxsize = xmax - xmin + kerf
 
-    elif (sepfile and svgpos == 'ST') or not sepfile:
-      if f_scale * (xmaxlast + cxsize) <= mwidth:
-        xdiff = xmaxlast - xmin + kerf
-        ydiff = yrowpos - ymin + kerf
+      if (sepfile and svgpos == 'TL') or (sepfile and vci == 0 and svgpos == 'ST'):
+        xdiff = -xmin + kerf
+        ydiff = -ymin + kerf
 
-        if rysize < cysize:
+      elif (sepfile and svgpos == 'ST') or not sepfile:
+        if f_scale * (xmaxlast + cxsize) <= mwidth:
+          xdiff = xmaxlast - xmin + kerf
+          ydiff = yrowpos - ymin + kerf
+
+          if rysize < cysize:
+            rysize = cysize
+
+          xmaxlast += cxsize
+
+        elif f_scale * cxsize > mwidth:
+          xdiff = -xmin + kerf
+          ydiff = yrowpos - ymin + kerf
+          yrowpos += cysize
+          if rysize < cysize:
+            rysize = cysize
+
+          xmaxlast = cxsize
           rysize = cysize
 
-        xmaxlast += cxsize
-
-      elif f_scale * cxsize > mwidth:
-        xdiff = -xmin + kerf
-        ydiff = yrowpos - ymin + kerf
-        yrowpos += cysize
-        if rysize < cysize:
-          rysize = cysize
-
-        xmaxlast = cxsize
-        rysize = cysize
-
-      else:
-        yrowpos += rysize
-        xdiff = -xmin + kerf
-        ydiff = yrowpos - ymin + kerf
-        xmaxlast = cxsize
-        rysize = cysize
-
-    elif sepfile and svgpos == 'CT':
-      xdiff = mwidth/(2 * f_scale) - (0.5 * cxsize) - xmin
-      ydiff = mheight/(2 * f_scale) - (0.5 * cysize) - ymin
-
-    if preview:
-      svgtext += '<g>\n'
-      svgtext += "".join(['<line x1="{0[0][0]}" y1="{0[0][1]}" x2="{0[1][0]}" y2="{0[1][1]}" style="stroke:rgb({1[0]},{1[1]},{1[2]});stroke-width:{2}" />\n'.format([(scale * (xdiff + v[0]), scale * (ydiff + v[1])) for v in e], [int(255 * lc) for lc in lcol], lthick) for e in etlist[vci]])
-      svgtext += '</g>\n'
-    else:
-      points = "{:.4f},{:.4f} {:.4f},{:.4f} ".format(scale*(xdiff+vclist[0][0]), scale*(ydiff+vclist[0][1]), scale*(xdiff+vclist[1][0]), scale*(ydiff+vclist[1][1]))
-      svgtext += '<g>\n'
-
-      for vco in vclist[2:]:
-        if vco in (-1, -2):
-          polyend = 'gon' if vco == -1 else 'line'
-          svgtext += '<poly{0} points="{1}" style="fill:none;stroke:rgb({2[0]},{2[1]},{2[2]});stroke-width:{3}" />\n'.format(polyend, points, [int(255 * lc) for lc in lcol], lthick)
-          points = ''
         else:
-          points += "{:.4f},{:.4f} ".format(scale*(xdiff+vco[0]), scale*(ydiff+vco[1]))
+          yrowpos += rysize
+          xdiff = -xmin + kerf
+          ydiff = yrowpos - ymin + kerf
+          xmaxlast = cxsize
+          rysize = cysize
 
-      if points:
-        svgtext += '<polygon points="{0}" style="fill:none;stroke:rgb({1[0]},{1[1]},{1[2]});stroke-width:{2}" />\n'.format(points, [int(255 * lc) for lc in lcol], lthick)
+      elif sepfile and svgpos == 'CT':
+        xdiff = mwidth/(2 * f_scale) - (0.5 * cxsize) - xmin
+        ydiff = mheight/(2 * f_scale) - (0.5 * cysize) - ymin
 
-      svgtext += '</g>\n'
+      if preview:
+        svgtext += '<g>\n'
+        svgtext += "".join(['<line x1="{0[0][0]}" y1="{0[0][1]}" x2="{0[1][0]}" y2="{0[1][1]}" style="stroke:rgb({1[0]},{1[1]},{1[2]});stroke-width:{2}" />\n'.format([(scale * (xdiff + v[0]), scale * (ydiff + v[1])) for v in e], [int(255 * lc) for lc in lcol], lthick) for e in etlist[vci]])
+        svgtext += '</g>\n'
+      else:
+        points = "{:.4f},{:.4f} {:.4f},{:.4f} ".format(scale*(xdiff+vclist[0][0]), scale*(ydiff+vclist[0][1]), scale*(xdiff+vclist[1][0]), scale*(ydiff+vclist[1][1]))
+        svgtext += '<g>\n'
 
-    if sepfile:
-      svgtext += '</svg>\n'
+        for vco in vclist[2:]:
+          if vco in (-1, -2):
+            polyend = 'gon' if vco == -1 else 'line'
+            svgtext += '<poly{0} points="{1}" style="fill:none;stroke:rgb({2[0]},{2[1]},{2[2]});stroke-width:{3}" />\n'.format(polyend, points, [int(255 * lc) for lc in lcol], lthick)
+            points = ''
+          else:
+            points += "{:.4f},{:.4f} ".format(scale*(xdiff+vco[0]), scale*(ydiff+vco[1]))
 
-      with open(filenames[vci], 'w') as svgfile:
+        if points:
+          svgtext += '<polygon points="{0}" style="fill:none;stroke:rgb({1[0]},{1[1]},{1[2]});stroke-width:{2}" />\n'.format(points, [int(255 * lc) for lc in lcol], lthick)
+
+        svgtext += '</g>\n'
+
+      if sepfile:
+        svgtext += '</svg>\n'
+
+        with open(filenames[vci], 'w') as svgfile:
+          svgfile.write('<?xml version="1.0"?>\n<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">\n\
+          <svg xmlns="http://www.w3.org/2000/svg" version="1.1"\n  width="{0}"\n  height="{1}"\n  viewbox="0 0 {0} {1}">\n\
+          <desc>Laser SVG Slices from Object: Sphere_net. Exported from Blender3D with the Laser Slicer Script</desc>\n\n'.format(mwidth*mm2pi, mheight*mm2pi))
+
+          svgfile.write(svgtext)
+
+    if not sepfile:
+
+      with open(filename, 'w') as svgfile:
         svgfile.write('<?xml version="1.0"?>\n<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">\n\
-        <svg xmlns="http://www.w3.org/2000/svg" version="1.1"\n  width="{0}"\n  height="{1}"\n  viewbox="0 0 {0} {1}">\n\
-        <desc>Laser SVG Slices from Object: Sphere_net. Exported from Blender3D with the Laser Slicer Script</desc>\n\n'.format(mwidth*mm2pi, mheight*mm2pi))
+          <svg xmlns="http://www.w3.org/2000/svg" version="1.1"\n  width="{0}"\n  height="{1}"\n  viewbox="0 0 {0} {1}">\n\
+          <desc>Laser SVG Slices from Object: Sphere_net. Exported from Blender3D with the Laser Slicer Script</desc>\n\n'.format(mwidth*mm2pi, mheight*mm2pi))
 
         svgfile.write(svgtext)
-
-  if not sepfile:
-
-    with open(filename, 'w') as svgfile:
-      svgfile.write('<?xml version="1.0"?>\n<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">\n\
-        <svg xmlns="http://www.w3.org/2000/svg" version="1.1"\n  width="{0}"\n  height="{1}"\n  viewbox="0 0 {0} {1}">\n\
-        <desc>Laser SVG Slices from Object: Sphere_net. Exported from Blender3D with the Laser Slicer Script</desc>\n\n'.format(mwidth*mm2pi, mheight*mm2pi))
-
-      svgfile.write(svgtext)
-      svgfile.write("</svg>\n")
+        svgfile.write("</svg>\n")
 
   bpy.context.scene.collection.objects.link(cob)
   bpy.context.view_layer.objects.active = cob

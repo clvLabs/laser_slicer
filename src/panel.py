@@ -154,7 +154,7 @@ class OBJECT_PT_LaserSlicer_Slice_Panel(LaserSlicer_Panel):
     col = split.column()
     col.operator("object.laser_slicer_preview", text="Preview", icon='HIDE_OFF')
     col = split.column()
-    col.operator("object.laser_slicer_slice", text="Slice", icon='PLAY')
+    col.operator("object.laser_slicer_slice", text="Slice", icon='FILE_TICK')
 
 # --------------------------------------------------------------------------------
 
