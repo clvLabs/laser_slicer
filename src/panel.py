@@ -33,7 +33,7 @@ class OBJECT_PT_LaserSlicer_About_Panel(LaserSlicer_Panel):
       icon='LOOP_BACK').mode = "ALL"
 
 
-class OBJECT_PT_LaserSlicer_Material_Panel(LaserSlicer_Panel):
+class OBJECT_PT_LaserSlicer_MaterialSettings_Panel(LaserSlicer_Panel):
   '''Material settings panel'''
   bl_label = "Material settings"
 
@@ -52,7 +52,7 @@ class OBJECT_PT_LaserSlicer_Material_Panel(LaserSlicer_Panel):
       icon='LOOP_BACK').mode = "MATERIAL"
 
 
-class OBJECT_PT_LaserSlicer_Cut_Panel(LaserSlicer_Panel):
+class OBJECT_PT_LaserSlicer_CutSettings_Panel(LaserSlicer_Panel):
   '''Cut settings panel'''
   bl_label = "Cut settings"
 
@@ -72,7 +72,7 @@ class OBJECT_PT_LaserSlicer_Cut_Panel(LaserSlicer_Panel):
       icon='LOOP_BACK').mode = "CUT"
 
 
-class OBJECT_PT_LaserSlicer_3DPreview_Panel(LaserSlicer_Panel):
+class OBJECT_PT_LaserSlicer_3DPreviewSettings_Panel(LaserSlicer_Panel):
   '''3D preview settings panel'''
   bl_label = "3D preview settings"
 
@@ -93,9 +93,9 @@ class OBJECT_PT_LaserSlicer_3DPreview_Panel(LaserSlicer_Panel):
       icon='LOOP_BACK').mode = "3DPREVIEW"
 
 
-class OBJECT_PT_LaserSlicer_Slice_Panel(LaserSlicer_Panel):
-  '''Slice panel'''
-  bl_label = "Slice"
+class OBJECT_PT_LaserSlicer_SliceSettings_Panel(LaserSlicer_Panel):
+  '''Slice settings panel'''
+  bl_label = "Slice settings"
 
   def draw(self, context):
     scene = context.scene
@@ -119,6 +119,16 @@ class OBJECT_PT_LaserSlicer_Slice_Panel(LaserSlicer_Panel):
       "object.op_laser_slicer_preferences_reset",
       text='Reset slice defaults',
       icon='LOOP_BACK').mode = "SLICE"
+
+
+class OBJECT_PT_LaserSlicer_Slice_Panel(LaserSlicer_Panel):
+  '''Slice panel'''
+  bl_label = "Slice"
+
+  def draw(self, context):
+    scene = context.scene
+    layout = self.layout
+    prefs = bpy.context.preferences.addons[__package__.split('.')[0]].preferences
 
     # --- Previes/Slice buttons ---
 
@@ -164,8 +174,9 @@ class OBJECT_PT_LaserSlicer_Slice_Panel(LaserSlicer_Panel):
 
 EXPORTED_CLASSES = (
   OBJECT_PT_LaserSlicer_About_Panel,
-  OBJECT_PT_LaserSlicer_Material_Panel,
-  OBJECT_PT_LaserSlicer_Cut_Panel,
-  OBJECT_PT_LaserSlicer_3DPreview_Panel,
+  OBJECT_PT_LaserSlicer_MaterialSettings_Panel,
+  OBJECT_PT_LaserSlicer_CutSettings_Panel,
+  OBJECT_PT_LaserSlicer_3DPreviewSettings_Panel,
+  OBJECT_PT_LaserSlicer_SliceSettings_Panel,
   OBJECT_PT_LaserSlicer_Slice_Panel,
 )
