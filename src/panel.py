@@ -149,12 +149,16 @@ class OBJECT_PT_LaserSlicer_Slice_Panel(LaserSlicer_Panel):
       slicing_allowed = False
 
     split = layout.split()
-    if not slicing_allowed:
-      split.enabled = False
+
     col = split.column()
     col.operator("object.laser_slicer_preview", text="Preview", icon='HIDE_OFF')
+    if not valid_object_selected:
+      col.enabled = False
+
     col = split.column()
     col.operator("object.laser_slicer_slice", text="Slice", icon='FILE_TICK')
+    if not slicing_allowed:
+      col.enabled = False
 
 # --------------------------------------------------------------------------------
 
