@@ -9,7 +9,7 @@ Laser slicer add-on for Blender.
 
 The Laser Slicer cuts up a Blender object and exports the slices to `SVG` files for cutting on a laser cutter or other post-processing.
 
-More details and link to tutorial video can be found at: https://blendscript.blogspot.com/2019/01/blender-28-laser-slicer.html
+More details and link to tutorial video can be found at the original project's author site: https://blendscript.blogspot.com/2019/01/blender-28-laser-slicer.html
 
 This project is a fork of the [laser_slicer](https://github.com/rgsouthall/laser_slicer) repo from [Ryan Southall](https://github.com/rgsouthall), thank you so much Ryan !!.
 
