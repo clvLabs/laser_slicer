@@ -2,6 +2,8 @@
 
 Laser slicer add-on for Blender.
 
+![laser_slicer](docs/assets/images/header.png)
+
 
 ## Description
 
@@ -45,6 +47,9 @@ The intention of the fork is to:
 
 ## Configuration
 
+![laser_slicer](docs/assets/images/panel.png)
+
+
 Settings are separated by sections:
 
 * `Material settings`.
@@ -56,7 +61,7 @@ All of these sections have a `Reset defaults` button to restore _factory setting
 
 There's also a `Reset ALL defaults` button in the `Laser Slicer` (about) section.
 
-Settings sections can be collapsed so only the settings you often change are visible. If you always use the same kind of material you could have the `Material settings` section collapsed.
+Settings sections can be collapsed so only the settings you often change are visible. If you always use the same kind of material you can have the `Material settings` section collapsed.
 
 ### Material settings
 
