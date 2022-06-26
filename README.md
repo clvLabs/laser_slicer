@@ -4,12 +4,9 @@ Laser slicer add-on for Blender.
 
 ![laser_slicer](docs/assets/images/header.png)
 
-
 ## Description
 
 The Laser Slicer cuts up a Blender object and exports the slices to `SVG` files for cutting on a laser cutter or other post-processing.
-
-More details and link to tutorial video can be found at the original project's author site: https://blendscript.blogspot.com/2019/01/blender-28-laser-slicer.html
 
 This project is a fork of the [laser_slicer](https://github.com/rgsouthall/laser_slicer) repo from [Ryan Southall](https://github.com/rgsouthall), thank you so much Ryan !!.
 
@@ -45,10 +42,11 @@ The intention of the fork is to:
 * The `LaserSlices` object will be regenerated.
 * The `SVG` file(s) will be saved.
 
+A tutorial video of the original project (not including this project's extra features) can be found at [Ryan's blog](https://blendscript.blogspot.com/2019/01/blender-28-laser-slicer.html).
+
 ## Configuration
 
 ![laser_slicer](docs/assets/images/panel.png)
-
 
 Settings are separated by sections:
 
@@ -85,7 +83,6 @@ Settings sections can be collapsed so only the settings you often change are vis
     * `X/Y/Z`: Distance (in scene units) from original object.
   * `Size`: Specify X/Y/Z distance from source in object size units.
     * `X/Y/Z`: Distance (in object size units) from original object.
-
 
 * `Translate preview`: Move the resulting preview 3D slices to compare with original.
 
