@@ -158,6 +158,12 @@ class OBJECT_PT_LaserSlicer_Slice_Panel(LaserSlicer_Panel):
       # stats: Slice count
       _factor = 1000 * context.scene.unit_settings.scale_length / (prefs.material_thickness + prefs.slice_gap)
       slice_count = context.active_object.dimensions[2] * _factor
+      if prefs.slice_range == 'S':
+        slice_count = 1
+      elif prefs.slice_range == 'R':
+        _range = prefs.slice_range_end_pct - prefs.slice_range_start_pct
+        slice_count *= (_range / 100)
+
       stats.append(f"{slice_count:.0f} slices")
 
       # warning: Slicing DISABLED
