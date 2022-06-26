@@ -36,6 +36,7 @@ class OBJECT_PT_LaserSlicer_About_Panel(LaserSlicer_Panel):
 class OBJECT_PT_LaserSlicer_MaterialSettings_Panel(LaserSlicer_Panel):
   '''Material settings panel'''
   bl_label = "Material settings"
+  bl_options = {'DEFAULT_CLOSED'}
 
   def draw(self, context):
     layout = self.layout
@@ -55,6 +56,7 @@ class OBJECT_PT_LaserSlicer_MaterialSettings_Panel(LaserSlicer_Panel):
 class OBJECT_PT_LaserSlicer_CutSettings_Panel(LaserSlicer_Panel):
   '''Cut settings panel'''
   bl_label = "Cut settings"
+  bl_options = {'DEFAULT_CLOSED'}
 
   def draw(self, context):
     layout = self.layout
@@ -75,6 +77,7 @@ class OBJECT_PT_LaserSlicer_CutSettings_Panel(LaserSlicer_Panel):
 class OBJECT_PT_LaserSlicer_3DPreviewSettings_Panel(LaserSlicer_Panel):
   '''3D preview settings panel'''
   bl_label = "3D preview settings"
+  bl_options = {'DEFAULT_CLOSED'}
 
   def draw(self, context):
     layout = self.layout
@@ -96,6 +99,7 @@ class OBJECT_PT_LaserSlicer_3DPreviewSettings_Panel(LaserSlicer_Panel):
 class OBJECT_PT_LaserSlicer_SliceSettings_Panel(LaserSlicer_Panel):
   '''Slice settings panel'''
   bl_label = "Slice settings"
+  bl_options = {'DEFAULT_CLOSED'}
 
   def draw(self, context):
     scene = context.scene
