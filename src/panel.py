@@ -139,7 +139,7 @@ class OBJECT_PT_LaserSlicer_Slice_Panel(LaserSlicer_Panel):
       if not bpy.data.filepath and not prefs.output_file:
         col = split.column()
         col.alert = True
-        col.label(text="Please save file before slicing")
+        col.label(text="Please save file or specify an output file to enable slicing")
         slicing_allowed = False
     else:
       split = layout.split()
