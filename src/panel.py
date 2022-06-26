@@ -25,6 +25,13 @@ class OBJECT_PT_LaserSlicer_About_Panel(LaserSlicer_Panel):
         )
     op.url = 'https://github.com/clvLabs/laser_slicer'
 
+    row = layout.row()
+    row.alert = True
+    row.operator(
+      "object.op_laser_slicer_preferences_reset",
+      text='Reset ALL preferences',
+      icon='LOOP_BACK').mode = "ALL"
+
 
 class OBJECT_PT_LaserSlicer_Material_Panel(LaserSlicer_Panel):
   '''Material settings panel'''
@@ -143,21 +150,6 @@ class OBJECT_PT_LaserSlicer_Slice_Panel(LaserSlicer_Panel):
       col.label(text="Please select an object to slice")
 
 
-class OBJECT_PT_LaserSlicer_Reset_Panel(LaserSlicer_Panel):
-  '''Reset panel'''
-  bl_label = "Reset"
-  bl_options = {'DEFAULT_CLOSED'}
-
-  def draw(self, context):
-    layout = self.layout
-
-    row = layout.row()
-    row.alert = True
-    row.operator(
-      "object.op_laser_slicer_preferences_reset",
-      text='Reset ALL preferences',
-      icon='LOOP_BACK').mode = "ALL"
-
 # --------------------------------------------------------------------------------
 
 EXPORTED_CLASSES = (
@@ -166,5 +158,4 @@ EXPORTED_CLASSES = (
   OBJECT_PT_LaserSlicer_Cut_Panel,
   OBJECT_PT_LaserSlicer_3DPreview_Panel,
   OBJECT_PT_LaserSlicer_Slice_Panel,
-  OBJECT_PT_LaserSlicer_Reset_Panel,
 )
