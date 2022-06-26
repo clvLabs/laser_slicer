@@ -29,7 +29,7 @@ class OBJECT_PT_LaserSlicer_About_Panel(LaserSlicer_Panel):
     row.alert = True
     row.operator(
       "object.op_laser_slicer_preferences_reset",
-      text='Reset ALL preferences',
+      text='Reset ALL defaults',
       icon='LOOP_BACK').mode = "ALL"
 
 
