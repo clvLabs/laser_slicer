@@ -134,34 +134,55 @@ class OBJECT_PT_LaserSlicer_Slice_Panel(LaserSlicer_Panel):
     layout = self.layout
     prefs = bpy.context.preferences.addons[__package__.split('.')[0]].preferences
 
-    # --- Previes/Slice buttons ---
+    selected_object_count = len(bpy.context.selected_objects)
 
     valid_object_selected = context.active_object \
+      and selected_object_count == 1 \
       and context.active_object.select_get() \
       and context.active_object.type == 'MESH' \
       and context.active_object.data.polygons
 
-    slicing_allowed = True
+    slicing_allowed = valid_object_selected
+
+    stats = [f"{selected_object_count} objects selected."]
+    warning_str = ""
 
     if valid_object_selected:
-      row = layout.row()
+
+      # stats: Object size
+      _fac = 1000 * context.scene.unit_settings.scale_length
+      _dim = context.active_object.dimensions
+      _str = f"Size: {int(_dim[0]*_fac)}x{int(_dim[1]*_fac)}x{int(_dim[2]*_fac)}"
+      stats.append(_str)
+
+      # stats: Slice count
       _factor = 1000 * context.scene.unit_settings.scale_length / (prefs.material_thickness + prefs.slice_gap)
       slice_count = context.active_object.dimensions[2] * _factor
-      row.label(text = 'No. of slices : {:.0f}'.format(slice_count))
+      stats.append(f"{slice_count:.0f} slices")
 
-      split = layout.split()
+      # warning: Slicing DISABLED
       if not bpy.data.filepath and not prefs.output_file:
-        col = split.column()
-        col.alert = True
-        col.label(text="Please save file or specify an output file to enable slicing")
         slicing_allowed = False
+        warning_str = "Slicing DISABLED: Save or specify output to enable."
     else:
-      split = layout.split()
-      col = split.column()
-      col.alert = True
-      col.label(text="Please select an object to slice")
-      slicing_allowed = False
+      # warning: No valid object selected
+      if not selected_object_count:
+        warning_str = "Select an object to slice."
+      elif selected_object_count > 1:
+        warning_str = "Select a SINGLE object to slice."
 
+    # Show stats
+    for stats_str in stats:
+      row = layout.row()
+      row.label(text=stats_str)
+
+    # Show warning
+    if warning_str:
+      row = layout.row()
+      row.alert = True
+      row.label(text=warning_str)
+
+    # Show action buttons
     split = layout.split()
 
     col = split.column()
