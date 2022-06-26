@@ -36,6 +36,10 @@ class Slicer_Preferences_Reset(bpy.types.Operator):
 
     if mode == "ALL" or mode == "SLICE":
       prefs.property_unset('slice_gap')
+      prefs.property_unset('slice_range')
+      prefs.property_unset('single_slice_pct')
+      prefs.property_unset('slice_range_start_pct')
+      prefs.property_unset('slice_range_end_pct')
       prefs.property_unset('output_file')
       prefs.property_unset('separate_files')
       prefs.property_unset('svg_position')
@@ -156,6 +160,44 @@ class Slicer_Preferences(bpy.types.AddonPreferences):
     soft_max=10,
     step=0.1*100,
     default=0,
+    )
+
+  slice_range: bpy.props.EnumProperty(
+    name="Range",
+    description="Select which part of the object gets sliced",
+    items=[
+      ('F', 'Full',   'Full height of the object is sliced'),
+      ('R', 'Range',  'A range of the height is sliced'),
+      ('S', 'Single', 'A single slice is cut')
+      ],
+    default='F',
+    )
+
+  single_slice_pct: bpy.props.IntProperty(
+    name="Single slice pos",
+    description="Single slice at % of object height",
+    subtype="PERCENTAGE",
+    min=0,
+    max=100,
+    default=50,
+    )
+
+  slice_range_start_pct: bpy.props.IntProperty(
+    name="Start at",
+    description="Start slicing at % of object height",
+    subtype="PERCENTAGE",
+    min=0,
+    max=100,
+    default=0,
+    )
+
+  slice_range_end_pct: bpy.props.IntProperty(
+    name="Stop at",
+    description="Stop slicing at % of object height",
+    subtype="PERCENTAGE",
+    min=0,
+    max=100,
+    default=100,
     )
 
   output_file: bpy.props.StringProperty(

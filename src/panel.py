@@ -96,6 +96,12 @@ class OBJECT_PT_LaserSlicer_Slice_Panel(LaserSlicer_Panel):
     prefs = bpy.context.preferences.addons[__package__.split('.')[0]].preferences
 
     layout.row().prop(prefs, "slice_gap")
+    layout.row().prop(prefs, "slice_range")
+    if prefs.slice_range == "S":
+      layout.row().prop(prefs, "single_slice_pct")
+    elif prefs.slice_range == "R":
+      layout.row().prop(prefs, "slice_range_start_pct")
+      layout.row().prop(prefs, "slice_range_end_pct")
     layout.row().prop(prefs, "output_file")
     layout.row().prop(prefs, "separate_files")
     if prefs.separate_files:

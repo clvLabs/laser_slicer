@@ -2,7 +2,7 @@ import bpy, os, bmesh, numpy
 
 SLICES_OBJ_NAME = "LaserSlices"
 
-def slicer(settings):
+def slicer(operator, settings):
   dp = bpy.context.evaluated_depsgraph_get()
   f_scale = 1000 * bpy.context.scene.unit_settings.scale_length
   aob = bpy.context.active_object
@@ -17,9 +17,41 @@ def slicer(settings):
   mheight = settings.material_height
   lt = settings.material_thickness/f_scale
   sepfile = settings.separate_files
-  minz = min([v.co[2] for v in bm.verts])
-  maxz = max([v.co[2] for v in bm.verts])
-  lh = minz + lt * 0.5
+  obj_minz = min([v.co[2] for v in bm.verts])
+  obj_maxz = max([v.co[2] for v in bm.verts])
+  total_height = obj_maxz-obj_minz
+
+  if settings.slice_range == "F":
+    minz = obj_minz
+    maxz = obj_maxz
+  elif settings.slice_range == "R":
+    if settings.slice_range_end_pct < settings.slice_range_start_pct:
+      msg = f"[laser-slicer] Range error: end ({settings.slice_range_end_pct}%) < start ({settings.slice_range_start_pct}%), fixing..."
+      operator.report({'WARNING'}, msg)
+      settings.slice_range_end_pct = settings.slice_range_start_pct
+
+    minz = obj_minz + (total_height * (settings.slice_range_start_pct / 100))
+    maxz = obj_minz + (total_height * (settings.slice_range_end_pct / 100))
+  elif settings.slice_range == "S":
+    minz = obj_minz + (total_height * (settings.single_slice_pct / 100))
+    maxz = minz
+
+  lh = minz
+
+  # Avoid trouble with extreme ranges
+  hmt = lt*0.1  # Half Material Thickness
+  safe_min_z = obj_minz + hmt
+  safe_max_z = obj_maxz - hmt
+
+  if lh < safe_min_z:
+    lh = safe_min_z
+
+  if lh > safe_max_z:
+    lh = safe_max_z
+
+  if (lh + hmt) > maxz:
+    maxz = lh + hmt
+
   preview = settings.preview
   kerf = settings.laser_kerf/f_scale
   svgpos = settings.svg_position

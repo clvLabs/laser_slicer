@@ -28,7 +28,7 @@ def run_slicer(operator, preview):
   prefs.preview = preview
 
   start_time = time.time()
-  slicer(prefs)
+  slicer(operator, prefs)
 
   elapsed = time.time() - start_time
   msg = f"[laser-slicer] FINISHED in {elapsed:5.2f}s"
