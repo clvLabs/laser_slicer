@@ -34,8 +34,7 @@ The intention of the fork is to:
 * Select the object you want to slice.
 * Activate the side panel with `n`.
 * Select the `Laser` tab.
-* Configure your material settings.
-* Configure your cut settings.
+* Adjust your settings.
 * Click the `Preview` button.
 * A new `LaserSlices` object will be created.
 * Tweak the settings until you like what you see.
